@@ -58,6 +58,16 @@ python3 generate_data.py   # creates data/
 python3 disease_classifier.py
 ```
 
+### 🔄 Quick Load — reuse the trained model
+
+```python
+import joblib
+saved = joblib.load("outputs/rf_model.joblib")
+model = saved["model"]          # RandomForestClassifier
+feats = saved["feature_names"]  # 42 feature names
+proba = model.predict_proba(X_new)[:, 1]   # P(CD/IBD)
+```
+
 ---
 
 ## 📁 Project Structure
