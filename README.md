@@ -41,19 +41,25 @@
 | File | Description |
 |------|-------------|
 | `outputs/disease_classifier_dashboard.png` | Combined 3×3 dashboard |
+| `outputs/rf_model.joblib` | Saved Random Forest model + feature names |
+| `outputs/predictions.csv` | Test set predictions |
+| `outputs/feature_importance.csv` | Gini & permutation importance per feature |
+| `outputs/differential_abundance.csv` | DA results (all taxa) |
 | `outputs/panels/SEP1_permutation_importance.png` | All 37 taxa — permutation importance |
+| `outputs/panels/SEP2_ROC_PR_curves.png` | ROC + PR curves |
+| `outputs/panels/SEP2_biomarker_volcano.png` | Biomarker volcano plot |
 | `outputs/panels/SEP2_differential_abundance.png` | Sig. DA taxa barplot |
 | `outputs/panels/SEP3_ROC_PR_curves.png` | ROC + PR (RF vs GBT) |
+| `outputs/panels/SEP3_alpha_diversity.png` | Alpha diversity comparison |
+| `outputs/panels/SEP4_abundance_heatmap.png` | Taxon abundance heatmap |
 | `outputs/panels/SEP4_learning_curve.png` | Learning curve |
-| `outputs/predictions.csv` | Test set predictions |
-| `outputs/differential_abundance.csv` | DA results (all taxa) |
 
 ---
 
 ## 🚀 How to Run
 
 ```bash
-pip install scikit-learn pandas numpy matplotlib seaborn scipy
+pip install scikit-learn pandas numpy matplotlib seaborn scipy joblib
 python3 generate_data.py   # creates data/
 python3 disease_classifier.py
 ```
@@ -64,7 +70,7 @@ python3 disease_classifier.py
 import joblib
 saved = joblib.load("outputs/rf_model.joblib")
 model = saved["model"]          # RandomForestClassifier
-feats = saved["feature_names"]  # 42 feature names
+feats = saved["feature_names"]  # feature names used by the model
 proba = model.predict_proba(X_new)[:, 1]   # P(CD/IBD)
 ```
 
@@ -74,20 +80,27 @@ proba = model.predict_proba(X_new)[:, 1]   # P(CD/IBD)
 
 ```
 day18-disease-classifier/
-├── generate_data.py
-├── disease_classifier.py
 ├── README.md
+├── generate_data.py
+├── classifier.py
+├── disease_classifier.py
 ├── data/
 │   ├── otu_table.csv
 │   └── metadata.csv
 └── outputs/
     ├── disease_classifier_dashboard.png
+    ├── rf_model.joblib
     ├── predictions.csv
+    ├── feature_importance.csv
     ├── differential_abundance.csv
     └── panels/
         ├── SEP1_permutation_importance.png
+        ├── SEP2_ROC_PR_curves.png
+        ├── SEP2_biomarker_volcano.png
         ├── SEP2_differential_abundance.png
         ├── SEP3_ROC_PR_curves.png
+        ├── SEP3_alpha_diversity.png
+        ├── SEP4_abundance_heatmap.png
         └── SEP4_learning_curve.png
 ```
 
